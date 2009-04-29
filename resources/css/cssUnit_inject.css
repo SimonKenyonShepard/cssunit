@@ -1,0 +1,53 @@
+.cssUnitInfo {
+    
+    position: absolute;
+    overflow: hidden;
+    z-index: 99999999;
+    width: 120px;
+    height: 70px;
+}
+
+.cssUnitInfo .wrapper {
+    
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 105px;
+    height: 60px;
+    -moz-border-radius: 5px;
+}
+
+.cssUnitInfo span,
+.cssUnitInfo strong {
+    display: block;
+    font-size: 12px;
+}
+
+.cssUnitInfo .pointer {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    width: 1px;
+    height: 1px;
+}
+
+.cssUnitInfo .fail .pointer {
+    border-right : 5px solid #ff393c;
+}
+
+.cssUnitInfo .pass .pointer {
+    border-right : 5px solid #adeb41;
+}
+
+.cssUnitInfo .fail {
+    background-color: #ff393c;
+}
+
+.cssUnitInfo .pass {
+    background-color: #adeb41;
+}
+
+

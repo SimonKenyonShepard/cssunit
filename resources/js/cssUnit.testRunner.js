@@ -266,48 +266,24 @@
     };
     
     var generateDetails = function(oData, sSelector) {
-        var sType = "#ff393c";
+        var sType = "fail";
         if(oData.sExpected === oData.sActual) {
-            sType="#adeb41";
+            sType="pass";
         }
         var eDetails = $('<div><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title">Expected : '+oData.sExpected+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>');
         var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
         var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
         $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
         eDetails.css({
-            position : "absolute",
             top: oOffsets.top,
             left: oOffsets.left+iWidth,
-            width: 120,
-            height: 70,
-            overflow : "hidden",
-            zIndex: 999999999
         });
-		$(".wrapper", eDetails).css({
-			padding: "5px",
-			position : "absolute",
-			top: 0,
-			right: 0,
-			backgroundColor: sType,
-			width: 105,
-			height: 60,
-			"-moz-border-radius" : "5px"
-		});
+		$(".wrapper", eDetails).addClass(sType);
 		$("span, strong", eDetails).css({
 			display: "block"
 		});
         $("span.title", eDetails).css({
 			borderBottom: "1px dotted #000"
-		});
-		$(".pointer", eDetails).css({
-			position : "absolute",
-			top: 10,
-			left: 0,
-			borderTop : "5px solid transparent",
-			borderRight : "5px solid "+sType,
-			borderBottom: "5px solid transparent",
-			width: 1,
-			height: 1
 		});
         return eDetails;
     };
