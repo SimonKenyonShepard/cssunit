@@ -244,47 +244,33 @@
     
     var insertDetails = function(event) {
         var eOverlay = $("<div></div>");
-        var iHeight = $("body", eTestHarness.document).height();
-        $(eOverlay).css({
-            opacity: 0.8,
-            height: iHeight,
-            width: "100%",
-            backgroundColor: "#000",
-            position: "absolute",
-            top : 0,
-            left: 0,
-            zIndex: 99999999
-        });
+        $(eOverlay).addClass("cssUnitOverlay");
+        var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
+        console.log(sScriptPath);
+        $("head", eTestHarness.document).append('<link rel="stylesheet" href="'+sScriptPath+'" type="text/css"/>');
         $("body", eTestHarness.document).append(eOverlay);
         cssUnit.mainPanel.retractPane();
         for(var i=0; i<event.data.aTested.length; i++) {
             var eTestData = generateDetails(event.data.aTested[i], event.data.sSelector);
-            //console.log("simon", event);
             $("body", eTestHarness.document).append(eTestData);
         }
         $("#testEnvironment").unbind("load", insertDetails);
     };
     
     var generateDetails = function(oData, sSelector) {
-        var sType = "fail";
+        var sType = "cssUnitFail";
         if(oData.sExpected === oData.sActual) {
-            sType="pass";
+            sType="cssUnitPass";
         }
-        var eDetails = $('<div><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title">Expected : '+oData.sExpected+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>');
+        var eDetails = $('<div class="cssUnitInfo"><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title">Expected : '+oData.sExpected+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>');
         var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
         var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
         $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
         eDetails.css({
             top: oOffsets.top,
-            left: oOffsets.left+iWidth,
+            left: oOffsets.left+iWidth
         });
-		$(".wrapper", eDetails).addClass(sType);
-		$("span, strong", eDetails).css({
-			display: "block"
-		});
-        $("span.title", eDetails).css({
-			borderBottom: "1px dotted #000"
-		});
+		$(eDetails).addClass(sType);
         return eDetails;
     };
     
