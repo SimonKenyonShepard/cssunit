@@ -1,0 +1,321 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td  {
+	
+	background: transparent;
+	border: 0;
+	font-size: 100%;
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	vertical-align: baseline;
+	
+}
+
+		
+html, body {
+	
+	height: 100%;
+	width: 100%;
+	
+}
+
+body {
+	 overflow:hidden; 
+}
+
+		
+ol, ul  {
+	
+	list-style: none;
+	
+}
+
+		
+#cssUnit {
+	
+	background-color: #000;
+	border: 1px solid #fff;
+	border-left: 0;
+	height: 86%;
+	-moz-border-radius: 0 10px 10px 0;
+	padding: 1%;
+	position: absolute;
+	left: 0;
+	top: 5%;
+	width: 180px;
+	
+}
+
+		
+#cssUnit h2 {
+	
+	background: url(../images/cssUnit/icon_logo_static.png) no-repeat center right;
+	margin-bottom: 10px;
+	padding: 5px 0;
+	
+}
+
+#cssUnit h2.testing {
+	background: url(../images/cssUnit/icon_logo_anim.gif) no-repeat center right;
+}
+
+		
+#cssUnit h2 img {
+	
+	height: 26px;
+	width: 119px;
+	
+}
+
+		
+#cssUnit .mainOptions li {
+	
+	background: #31c4f5 url(../images/cssUnit/bg_mainOptions.png) repeat-x bottom left;
+	border: 2px solid #fff;
+	font-family: monospace;
+	margin-bottom: 5px;
+	-moz-border-radius: 10px;
+	opacity: 0.5;
+	padding: 5px 10px 0 10px;
+	position: relative;
+}
+
+		
+#cssUnit .mainOptions li h3 {
+	
+	color: #fff;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	padding-bottom: 5px;
+	
+}
+
+		
+#cssUnit .mainOptions li .content {
+	
+	border-top: 1px dashed #fff;
+	display: none;
+	height: 0px;
+	overflow: hidden;
+    position: relative;
+	
+}
+
+		
+#cssUnit input,
+#cssUnit select {
+	
+	background: #fff;
+	border: 1px solid #666;
+	color: #666;
+	font-family: monospace;
+	font-size: 12px;
+	margin-top: 10px;
+	padding: 2px;
+	width: 150px;
+	
+}
+
+#cssUnit label {
+	display: none;
+}
+
+		
+#existingRules,
+#existingFiles {
+	
+	overflow: hidden;
+    position: absolute;
+    bottom: 30px;
+    top: 40px;
+    width: 154px;
+	
+}
+
+		
+#existingRules .selectorRules,
+#existingFiles .fileName {
+	
+	background: #ccc;
+	margin-bottom: 5px;
+	-moz-border-radius: 5px;
+	padding: 5px;
+	position: relative;
+	
+}
+
+		
+#existingRules .ruleSelector,
+#existingFiles .fileName {
+	
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	
+}
+
+#cssUnit .remove {
+	
+	background: url(../images/cssUnit/icon_remove.png) no-repeat;
+	cursor: pointer;
+	position: absolute;
+	height: 18px;
+	width: 12px;
+	top: 7px;
+	right: 5px;
+	text-indent: -10000px;
+	
+}
+
+#cssUnit .remove:hover {
+	background-position: top right;
+}
+
+		
+#existingRules .rule {
+	
+	border: 1px dashed #fff;
+	display: block;
+	font-size: 11px;
+	margin: 5px 0;
+	
+}
+
+#cssUnit .info {
+	background: url(../images/cssUnit/bg_infoPanel.png) no-repeat;
+    -moz-border-radius: 5px;
+	margin: 10px 0;
+	overflow: hidden;
+    padding: 5px;
+    position: absolute;
+    bottom: 40px;
+    top: 0;
+    width: 154px;
+}
+
+#cssUnit #testProfiles .info
+{
+    
+    top: 30px;
+
+}
+
+#cssUnit #testProfiles .results {
+    
+    display: block;
+    font-size: 10px;
+    padding-top: 10px;
+    
+}
+
+#cssUnit #testProfiles .bar
+{
+    -moz-border-radius: 5px;
+    margin-left: 8px;
+    background: #fff url(../images/cssUnit/bg_bars.png) no-repeat -270px 0;
+    display: block;
+    width: 131px;
+    height: 20px;
+    padding-top: 5px;
+    text-align: center;
+    vertical-align: bottom;
+
+}
+
+#cssUnit #testProfiles #fails .bar {
+    
+    background-position: 131px 0;
+    
+}
+
+#cssUnit #testProfiles #lastRun {
+    display: block;
+}
+
+#cssUnit #testProfiles .rename {
+    margin-top: 10px;
+}
+
+#cssUnit #testProfiles .rename label {
+    display: block;
+    font-size: 10px;
+}
+
+#cssUnit .info input {
+    width: 140px;
+    background: transparent;
+    border: 1px dotted #999;
+    margin-top: 0;
+}
+
+#cssUnit .info input:focus {
+    background: #fff;
+    border: 1px solid #999;
+}
+
+#cssUnit .mainOptions #testConsole li {
+	background: none;
+    padding: 2px 5px;
+    border: 0;
+	 border-bottom: 1px dotted #000;
+    font-size: 10px;
+    color: #000;
+}
+
+#cssUnit .mainOptions #testConsole .pass:hover {
+    /* color: #adeb41; */
+    cursor : pointer;
+}
+#cssUnit .mainOptions #testConsole .fail:hover {
+    color: #ff393c;
+    cursor : pointer;
+}
+
+#cssUnit .lowerControls {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    overflow: auto;
+}
+
+#cssUnit button {
+    display: block;
+    border: 0;
+    background: url(../images/cssUnit/bg_button.png) no-repeat;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: bold;
+    height: 34px;
+    width: 75px;
+    padding: 0 7px 7px 0;
+    margin: 0;
+    float: right;
+}
+
+#cssUnit button.right {
+}
+
+#cssUnit button.left {
+    float: left;
+}
+
+#cssUnit button:hover {
+    background-position: top right;
+    padding: 0 3px 7px 0;
+}
+
+#runTests {
+	float: right;
+}
+
+		
+		

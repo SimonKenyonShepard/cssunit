@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>font-test</title>
+    <script type="text/javascript" src="../../resources/js/jquery-1.3.2.min.js"></script>
+    <style type="text/css">
+        .lighter {
+            font-weight: lighter;
+        }
+        .normal {
+            font-weight: normal;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .bolder {
+            font-weight: bolder;
+        }
+        .size_100 {
+            font-weight: 100;
+        }
+        .size_200 {
+            font-weight: 200;
+        }
+        .size_300 {
+            font-weight: 300;
+        }
+        .size_400 {
+            font-weight: 400;
+        }
+        .size_500 {
+            font-weight: 500;
+        }
+        .size_600 {
+            font-weight: 600;
+        }
+        .size_700 {
+            font-weight: 700;
+        }
+        .size_800 {
+            font-weight: 800;
+        }
+        .size_900 {
+            font-weight: 900;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".fontTest").children().each(function(index, element) {
+                $(element).append(" <span>Computed Style: "+$(element).css("fontWeight")+"</span>");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="sans-serif fontTest">
+        <p class="lighter">test lighter</p>
+        <p class="normal">test normal</p>
+        <p class="bold">test bold</p>
+        <p class="bolder">test bolder</p>
+        <p class="size_100">test 100</p>
+        <p class="size_200">test 200</p>
+        <p class="size_300">test 300</p>
+        <p class="size_400">test 400</p>
+        <p class="size_500">test 500</p>
+        <p class="size_600">test 600</p>
+        <p class="size_700">test 700</p>
+        <p class="size_800">test 800</p>
+        <p class="size_900">test 900</p>
+    </div>
+
+</body>
+</html>
