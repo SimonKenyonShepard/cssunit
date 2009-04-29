@@ -353,16 +353,12 @@
     };
     
     var testBold = function(oCurrentTestData) {
-        replaceFontWeightKeywords(oCurrentTestData.sActualValue);
-        replaceFontWeightKeywords(oCurrentTestData.sRule);
+        oCurrentTestData.sActualValue= replaceFontWeightKeywords(oCurrentTestData.sActualValue);
+        oCurrentTestData.sRule = replaceFontWeightKeywords(oCurrentTestData.sRule);
     };
     
     var replaceFontWeightKeywords = function(sValue) {
-        sValue.replace(/lighter/, "399");
-        sValue.replace(/normal/, "400");
         sValue.replace(/bold/, "700");
-        sValue.replace(/bolder/, "401");
-        
     };
     
     var arrayToString = function(array) {
