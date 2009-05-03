@@ -107,8 +107,10 @@
     var updateDisplayName = function(event)
     {
         event.preventDefault();
-        cssUnit.testData.updateDisplayName($("input", this).attr("value"));
+        var oNewName = $("input", this);
+        cssUnit.testData.updateDisplayName(oNewName.attr("value"));
         updateDropDown();
+        $(oNewName).blur();
     };
     
     /***********************************************
