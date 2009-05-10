@@ -232,8 +232,8 @@
         switch(iType) {
             case 1 : 
                 sBGColor = "#ff393c";
-            break
-        };
+            break;
+        }
         $("#console").animate({backgroundColor: sBGColor});
     };
     
@@ -243,34 +243,31 @@
     };
     
     var insertDetails = function(event) {
-        var eOverlay = $("<div></div>");
-        $(eOverlay).addClass("cssUnitOverlay");
-        var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
+        //var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
+        var sScriptPath = "../resources/css/cssUnit_inject.css";
         $("head", eTestHarness.document).append('<link rel="stylesheet" href="'+sScriptPath+'" type="text/css"/>');
-        $("body", eTestHarness.document).append(eOverlay);
+        $("body", eTestHarness.document).append('<div class="cssUnitOverlay"></div>');
         cssUnit.mainPanel.retractPane();
+        
         for(var i=0; i<event.data.aTested.length; i++) {
-            var eTestData = generateDetails(event.data.aTested[i], event.data.sSelector);
-            $("body", eTestHarness.document).append(eTestData);
+            var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector);
+            $("body", eTestHarness.document).append(sTestData);
         }
         $("#testEnvironment").unbind("load", insertDetails);
+        
     };
     
     var generateDetails = function(oData, sSelector) {
+        //must be output as a string becuase IE won't allow elements created in one document to be appended to another in an iframe
+        $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
         var sType = "cssUnitFail";
         if(oData.sExpected === oData.sActual) {
             sType="cssUnitPass";
         }
-        var eDetails = $('<div class="cssUnitInfo"><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title" title="'+oData.sExpected+'">Expected : '+shorten(oData.sExpected, 8)+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>');
         var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
         var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
-        $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
-        eDetails.css({
-            top: oOffsets.top,
-            left: oOffsets.left+iWidth
-        });
-		$(eDetails).addClass(sType);
-        return eDetails;
+        var sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title" title="'+oData.sExpected+'">Expected : '+shorten(oData.sExpected, 8)+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>';
+        return sDetails;
     };
     
     var testColors = function(oCurrentTestData) {
