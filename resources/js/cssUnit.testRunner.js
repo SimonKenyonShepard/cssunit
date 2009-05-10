@@ -151,7 +151,7 @@
               oTestData.aTested.push( {
                   iElementIndex : iIndex,
                   sExpected : sRules,
-                  sActual : sActualValue
+                  sActual : oCurrentTestData.sActualValue
               });
               if(bPassed) {
                   aPassesLocal.push(oTestData);
@@ -246,7 +246,6 @@
         var eOverlay = $("<div></div>");
         $(eOverlay).addClass("cssUnitOverlay");
         var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
-        console.log(sScriptPath);
         $("head", eTestHarness.document).append('<link rel="stylesheet" href="'+sScriptPath+'" type="text/css"/>');
         $("body", eTestHarness.document).append(eOverlay);
         cssUnit.mainPanel.retractPane();
@@ -262,7 +261,7 @@
         if(oData.sExpected === oData.sActual) {
             sType="cssUnitPass";
         }
-        var eDetails = $('<div class="cssUnitInfo"><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title">Expected : '+oData.sExpected+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>');
+        var eDetails = $('<div class="cssUnitInfo"><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title" title="'+oData.sExpected+'">Expected : '+shorten(oData.sExpected, 8)+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>');
         var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
         var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
         $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
@@ -283,7 +282,7 @@
                   aInts[0] = padHex(parseInt(aInts[0], 10).toString(16));
                   aInts[1] = padHex(parseInt(aInts[2], 10).toString(16));
                   aInts[2] = padHex(parseInt(aInts[2], 10).toString(16));
-                  oCurrentTestData.sActualValue = "#"+aInts[0]+aInts[1]+aInts[2];
+                  oCurrentTestData.sActualValue = ("#"+aInts[0]+aInts[1]+aInts[2]).toUpperCase();
               }
     };
     
@@ -335,6 +334,10 @@
         }
         sText += "]";
         return sText;
+    };
+    
+    var shorten = function(sText, iLength) {
+        return sText.substring(0, iLength-3)+"...";
     };
     
     /***********************************************
