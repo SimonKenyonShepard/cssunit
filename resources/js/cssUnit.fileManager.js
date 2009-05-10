@@ -56,7 +56,7 @@
 		if(sFileName.length > 17) {
 			sDisplayFileName = "..."+sDisplayFileName.substr(sFileName.length-15, sFileName.length); 
 		}
-        var eNewFile = $('<div class="fileName"><span>'+sDisplayFileName+'</span><span class="remove">remove</span></div>');
+        var eNewFile = $('<div class="fileName"><span title="'+sFileName+'">'+sDisplayFileName+'</span><span class="remove">remove</span></div>');
         $(".remove", eNewFile).bind("click", {sFileName : sFileName}, removeFile);
         return eNewFile;
     };
