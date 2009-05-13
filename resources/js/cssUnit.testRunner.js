@@ -151,7 +151,8 @@
               oTestData.aTested.push( {
                   iElementIndex : iIndex,
                   sExpected : sRules,
-                  sActual : oCurrentTestData.sActualValue
+                  sActual : oCurrentTestData.sActualValue,
+                  bPassed : bPassed 
               });
               if(bPassed) {
                   aPassesLocal.push(oTestData);
@@ -244,7 +245,7 @@
     
     var insertDetails = function(event) {
         //var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
-        var sScriptPath = "http://www.trisis.co.uk/cssUnit/resources/css/cssUnit_inject.css";
+        var sScriptPath = "http://www.trisis.co.uk/resources/css/cssUnit_inject.css";
         $("head", eTestHarness.document).append('<link rel="stylesheet" href="'+sScriptPath+'" type="text/css"/>');
         $("body", eTestHarness.document).append('<div class="cssUnitOverlay"></div>');
         cssUnit.mainPanel.retractPane();
@@ -259,14 +260,17 @@
     
     var generateDetails = function(oData, sSelector) {
         //must be output as a string becuase IE won't allow elements created in one document to be appended to another in an iframe
-        $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
-        var sType = "cssUnitFail";
-        if(oData.sExpected === oData.sActual) {
-            sType="cssUnitPass";
+        var sType="cssUnitPass";
+        var sDetails = null;
+        console.log(oData);
+        if(!oData.bPassed) {
+            $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
+            sType = "cssUnitFail";
+            var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
+            var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
+            var sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title" title="'+oData.sExpected+'">Expected : '+shorten(oData.sExpected, 8)+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>';
         }
-        var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
-        var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
-        var sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title" title="'+oData.sExpected+'">Expected : '+shorten(oData.sExpected, 8)+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>';
+
         return sDetails;
     };
     

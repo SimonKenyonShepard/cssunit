@@ -1,9 +1,9 @@
 .cssUnitOverlay {
      opacity: 0.8;
-     height: 100%;
+     height: 10000px;
      width: 100%;
      background-color: #000;
-     position: absolute;
+     position: fixed;
      top : 0;
      left: 0;
      z-Index: 99999999;
