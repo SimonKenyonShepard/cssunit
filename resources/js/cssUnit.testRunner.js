@@ -244,7 +244,7 @@
     
     var insertDetails = function(event) {
         //var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
-        var sScriptPath = "../resources/css/cssUnit_inject.css";
+        var sScriptPath = "http://www.trisis.co.uk/cssUnit/resources/css/cssUnit_inject.css";
         $("head", eTestHarness.document).append('<link rel="stylesheet" href="'+sScriptPath+'" type="text/css"/>');
         $("body", eTestHarness.document).append('<div class="cssUnitOverlay"></div>');
         cssUnit.mainPanel.retractPane();
