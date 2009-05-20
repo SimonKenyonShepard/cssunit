@@ -262,7 +262,6 @@
         //must be output as a string becuase IE won't allow elements created in one document to be appended to another in an iframe
         var sType="cssUnitPass";
         var sDetails = null;
-        console.log(oData);
         if(!oData.bPassed) {
             $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
             sType = "cssUnitFail";
