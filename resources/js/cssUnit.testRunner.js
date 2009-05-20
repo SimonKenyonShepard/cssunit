@@ -263,7 +263,7 @@
         var sType="cssUnitPass";
         var sDetails = null;
         if(!oData.bPassed) {
-            $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 999999999, position: "relative"});
+            $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 9999999, position: "relative"});
             sType = "cssUnitFail";
             var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
             var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
