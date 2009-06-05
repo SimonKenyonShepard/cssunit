@@ -251,14 +251,14 @@
         cssUnit.mainPanel.retractPane();
         
         for(var i=0; i<event.data.aTested.length; i++) {
-            var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector);
+            var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector, i);
             $("body", eTestHarness.document).append(sTestData);
         }
         $("#testEnvironment").unbind("load", insertDetails);
         
     };
     
-    var generateDetails = function(oData, sSelector) {
+    var generateDetails = function(oData, sSelector, iTestNo) {
         //must be output as a string becuase IE won't allow elements created in one document to be appended to another in an iframe
         var sType="cssUnitPass";
         var sDetails = null;
@@ -267,7 +267,7 @@
             sType = "cssUnitFail";
             var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
             var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
-            var sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+sSelector+'</strong><span class="title" title="'+oData.sExpected+'">Expected : '+shorten(oData.sExpected, 8)+'</span><span class="title">Actual : '+oData.sActual+'</span></div></div>';
+            sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+iTestNo+'</strong></div></div>';
         }
 
         return sDetails;
