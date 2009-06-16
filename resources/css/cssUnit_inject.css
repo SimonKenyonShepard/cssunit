@@ -11,11 +11,11 @@
 
 .cssUnitInfo {
     
+    cursor: pointer;
     position: absolute;
-    overflow: hidden;
     z-index: 99999999;
-    width: 120px;
-    height: 70px;
+    width: 50px;
+    height: 30px;
 }
 
 .cssUnitInfo .wrapper {
@@ -24,7 +24,7 @@
     position: absolute;
     top: 0;
     left: 5px;
-    width: 20px;
+    width: 24px;
     -moz-border-radius: 5px;
 }
 
@@ -32,10 +32,32 @@
 .cssUnitInfo strong {
     
     color: #fff;
-    text-align: center;
     display: block;
     font-size: 12px;
     
+}
+
+.cssUnitInfo .details span {
+    
+    padding-top: 5px;
+    
+}
+
+.cssUnitInfo .details strong {
+    
+    padding-right: 10px;
+	 display: inline;
+    
+}
+
+.cssUnitInfo strong {
+    
+    text-align: center;
+    width: 25px;
+}
+
+.cssUnitInfo .details {
+    display: none;
 }
 
 .cssUnitInfo .pointer {
