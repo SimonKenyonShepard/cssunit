@@ -22,6 +22,7 @@
     var dTestStart = null;
     var aPasses = [];
     var aFails = [];
+    var displayBoxDetails = {};
    
     /***********************************************
     // cssUnit.testRunner : class constructor (description)
@@ -252,7 +253,9 @@
         
         for(var i=0; i<event.data.aTested.length; i++) {
             var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector, i);
-            $("body", eTestHarness.document).append(sTestData);
+            var eTestData = $(sTestData, eTestHarness.document);
+            $("body", eTestHarness.document).append(eTestData);
+            eTestData.toggle(showFailDetails, hideFailDetails);
         }
         $("#testEnvironment").unbind("load", insertDetails);
         
@@ -267,10 +270,44 @@
             sType = "cssUnitFail";
             var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
             var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
-            sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+iTestNo+'</strong></div></div>';
+            var sDetailsContent = '<div class="details"><span><strong>Element:</strong>'+sSelector+'</span><span><strong>Expected:</strong>'+oData.sExpected+'</span><span><strong>Actual:</strong>'+oData.sActual+'</span></div>';
+            sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+iTestNo+'</strong>'+sDetailsContent+'</div></div>';
         }
 
         return sDetails;
+    };
+    
+    var showFailDetails = function() {
+        var eWrapper = $(".wrapper", this);
+        getSizeDetails(eWrapper);
+        eWrapper.animate({
+            width: 150,
+            height: 100,
+            left: -75,
+            top: -50
+        }, 300, 'easeOutBounce', function() {
+           $(this).find(".details").fadeIn("normal"); 
+        });
+    };
+    
+    var hideFailDetails = function() {
+        var that = this;
+        $(".details", this).fadeOut("fast", function() {
+            $(".wrapper", that).animate({
+                width: displayBoxDetails.width,
+                height: displayBoxDetails.height,
+                left: displayBoxDetails.left,
+                top: displayBoxDetails.top
+            }, 300, 'easeOutBounce');
+        });
+        
+    };
+    
+    var getSizeDetails = function(element) {
+        displayBoxDetails.height = element.height();
+        displayBoxDetails.width = element.width();
+        displayBoxDetails.left = element.position().left;
+        displayBoxDetails.top = element.position().top;
     };
     
     var testColors = function(oCurrentTestData) {
