@@ -286,13 +286,15 @@
             left: -75,
             top: -50
         }, 300, 'easeOutBounce', function() {
-           $(this).find(".details").fadeIn("normal"); 
+           $(this).find(".details").fadeIn("normal");
+           $(this).find("> strong").css({textAlign: "left"});
         });
     };
     
     var hideFailDetails = function() {
         var that = this;
         $(".details", this).fadeOut("fast", function() {
+           $(".wrapper", that).find("> strong").css({textAlign: "center"});
             $(".wrapper", that).animate({
                 width: displayBoxDetails.width,
                 height: displayBoxDetails.height,
