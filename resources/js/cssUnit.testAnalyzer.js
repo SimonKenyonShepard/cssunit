@@ -31,19 +31,21 @@
         cssUnit.mainPanel.retractPane();
         
         for(var i=0; i<event.data.aTested.length; i++) {
-            var eCurrentFailSubject = $(event.data.sSelector, eTestHarness.document).eq(event.data.aTested[i].iElementIndex);
-            var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector, i, eCurrentFailSubject);
-            var eTestData = $(sTestData, eTestHarness.document);
-            $("body", eTestHarness.document).append(eTestData);
-            eTestData.toggle(showFailDetails, hideFailDetails, {test : true});
-            var mouseEvents = function(eCurrentFailSubject) {
-                var currentElement = eCurrentFailSubject;
-                eTestData.hover(function() {
-                    currentElement.css({outline: "1px dashed red"});
-                }, function() {
-                    currentElement.css({outline: "0"});
-                });
-            }(eCurrentFailSubject);
+            if(!event.data.aTested[i].bPassed) {
+                var eCurrentFailSubject = $(event.data.sSelector, eTestHarness.document).eq(event.data.aTested[i].iElementIndex);
+                var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector, i, eCurrentFailSubject);
+                var eTestData = $(sTestData, eTestHarness.document);
+                $("body", eTestHarness.document).append(eTestData);
+                eTestData.toggle(showFailDetails, hideFailDetails, {test : true});
+                var mouseEvents = function(eCurrentFailSubject) {
+                    var currentElement = eCurrentFailSubject;
+                    eTestData.hover(function() {
+                        currentElement.css({outline: "1px dashed red"});
+                    }, function() {
+                        currentElement.css({outline: "0"});
+                    });
+                }(eCurrentFailSubject);
+            }
         }
         $("#testEnvironment").unbind("load", insertDetails);
         
@@ -53,15 +55,12 @@
         //must be output as a string becuase IE won't allow elements created in one document to be appended to another in an iframe
         var sType="cssUnitPass";
         var sDetails = null;
-        if(!oData.bPassed) {
             eCurrentFailSubject.css({zIndex: 9999999, position: "relative"});
             sType = "cssUnitFail";
             var oOffsets = eCurrentFailSubject.offset();
             var iWidth = eCurrentFailSubject.width();
             var sDetailsContent = '<div class="details"><span><strong>Element:</strong>'+sSelector+'</span><span><strong>Expected:</strong>'+oData.sExpected+'</span><span><strong>Actual:</strong>'+oData.sActual+'</span></div>';
             sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+iTestNo+'</strong>'+sDetailsContent+'</div></div>';
-        }
-
         return sDetails;
     };
     

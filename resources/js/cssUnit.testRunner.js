@@ -144,10 +144,15 @@
               var bPassed = false;
               for(var i=0; i<oCurrentTest.aRules.length; i++) {
                   var oCurrentTestData = {sRule : oCurrentTest.aRules[i], sActualValue : sActualValue};
-                  //test to see if is color in wrong format
-                  testColors(oCurrentTestData);
-                  //test to see if it's a dimension in px and to what decimal places
-                  testPixels(oCurrentTestData);
+                  
+                  normalizeColors(oCurrentTestData);
+                  
+                  normalizePixels(oCurrentTestData);
+                  
+                  normalizeFontWeight(oCurrentTestData);
+                  
+                  checkForDivision(oCurrentTestData);
+                  //check to to see if it
                   if(oCurrentTestData.sActualValue === oCurrentTestData.sRule) {
                       bPassed = true;
                   }
@@ -242,7 +247,7 @@
         $("#console").animate({backgroundColor: sBGColor});
     };
     
-    var testColors = function(oCurrentTestData) {
+    var normalizeColors = function(oCurrentTestData) {
         //for different browsers return different styles of color response
         if(oCurrentTestData.sActualValue.indexOf("rgb") !== -1)
               {
@@ -255,7 +260,7 @@
               }
     };
     
-    var testPixels = function(oCurrentTestData) {
+    var normalizePixels = function(oCurrentTestData) {
         if(oCurrentTestData.sRule.indexOf("px") !== -1) {
             //find out how many decimal places it has
             var aDecimals = oCurrentTestData.sRule.split(".");
@@ -282,13 +287,23 @@
         return sNumber;
     };
     
-    var testBold = function(oCurrentTestData) {
+    var normalizeFontWeight = function(oCurrentTestData) {
         oCurrentTestData.sActualValue= replaceFontWeightKeywords(oCurrentTestData.sActualValue);
         oCurrentTestData.sRule = replaceFontWeightKeywords(oCurrentTestData.sRule);
     };
     
     var replaceFontWeightKeywords = function(sValue) {
-        sValue.replace(/bold/, "700");
+        return sValue.replace(/bold/, "700");
+    };
+    
+    var checkForDivision = function(oCurrentTestData) {
+        if(oCurrentTestData.sRule.indexOf("/") !== -1) {
+            var divisor = parseFloat(oCurrentTestData.sRule.replace(/\//, ""), 10);
+            var remainder = parseFloat(oCurrentTestData.sActualValue, 10)%divisor;
+            if(remainder === 0) {
+                oCurrentTestData.sRule = oCurrentTestData.sActualValue;
+            }
+        }
     };
     
     var arrayToString = function(array) {
