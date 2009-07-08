@@ -21,7 +21,6 @@
 	<script type="text/javascript" src="../resources/js/cssUnit.selectors.js"></script>
 	<script type="text/javascript" src="../resources/js/cssUnit.testData.js"></script>
 	<script type="text/javascript" src="../resources/js/cssUnit.testRunner.js"></script>
-	<script type="text/javascript" src="../resources/js/cssUnit.testAnalyzer.js"></script>
 	<script type="text/javascript" src="../resources/js/cssUnit.testProfiles.js"></script>
     <script  type="text/javascript">
 		$(document).ready(function() {
