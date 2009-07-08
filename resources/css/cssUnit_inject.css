@@ -39,14 +39,15 @@
 
 .cssUnitInfo .details span {
     
-    padding-top: 5px;
+    padding-bottom: 5px;
     
 }
 
 .cssUnitInfo .details strong {
     
     padding-right: 10px;
-	 display: inline;
+    display: inline;
+    float: none;
     
 }
 
@@ -54,10 +55,12 @@
     
     text-align: center;
     width: 25px;
+    float: left;
 }
 
 .cssUnitInfo .details {
     display: none;
+    float: left;
 }
 
 .cssUnitInfo .pointer {

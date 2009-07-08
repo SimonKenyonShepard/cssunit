@@ -245,31 +245,40 @@
     };
     
     var insertDetails = function(event) {
-        //var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
-        var sScriptPath = "http://www.trisis.co.uk/resources/css/cssUnit_inject.css";
+        var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
+        //var sScriptPath = "http://www.trisis.co.uk/resources/css/cssUnit_inject.css";
         $("head", eTestHarness.document).append('<link rel="stylesheet" href="'+sScriptPath+'" type="text/css"/>');
         $("body", eTestHarness.document).append('<div class="cssUnitOverlay"></div>');
         cssUnit.mainPanel.retractPane();
         
         for(var i=0; i<event.data.aTested.length; i++) {
-            var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector, i);
+            var eCurrentFailSubject = $(event.data.sSelector, eTestHarness.document).eq(event.data.aTested[i].iElementIndex);
+            var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector, i, eCurrentFailSubject);
             var eTestData = $(sTestData, eTestHarness.document);
             $("body", eTestHarness.document).append(eTestData);
-            eTestData.toggle(showFailDetails, hideFailDetails);
+            eTestData.toggle(showFailDetails, hideFailDetails, {test : true});
+            var mouseEvents = function(eCurrentFailSubject) {
+                var currentElement = eCurrentFailSubject;
+                eTestData.hover(function() {
+                    currentElement.css({outline: "1px dashed red"});
+                }, function() {
+                    currentElement.css({outline: "0"});
+                });
+            }(eCurrentFailSubject);
         }
         $("#testEnvironment").unbind("load", insertDetails);
         
     };
     
-    var generateDetails = function(oData, sSelector, iTestNo) {
+    var generateDetails = function(oData, sSelector, iTestNo, eCurrentFailSubject) {
         //must be output as a string becuase IE won't allow elements created in one document to be appended to another in an iframe
         var sType="cssUnitPass";
         var sDetails = null;
         if(!oData.bPassed) {
-            $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 9999999, position: "relative"});
+            eCurrentFailSubject.css({zIndex: 9999999, position: "relative"});
             sType = "cssUnitFail";
-            var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
-            var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
+            var oOffsets = eCurrentFailSubject.offset();
+            var iWidth = eCurrentFailSubject.width();
             var sDetailsContent = '<div class="details"><span><strong>Element:</strong>'+sSelector+'</span><span><strong>Expected:</strong>'+oData.sExpected+'</span><span><strong>Actual:</strong>'+oData.sActual+'</span></div>';
             sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+iTestNo+'</strong>'+sDetailsContent+'</div></div>';
         }
@@ -277,12 +286,12 @@
         return sDetails;
     };
     
-    var showFailDetails = function() {
+    var showFailDetails = function(event) {
         var eWrapper = $(".wrapper", this);
         getSizeDetails(eWrapper);
         eWrapper.animate({
             width: 150,
-            height: 100,
+            height: 65,
             left: -75,
             top: -50
         }, 300, 'easeOutBounce', function() {
