@@ -79,6 +79,6 @@ hr { height: 1px; border-style: none; color: #d0d0d0; background-color: #C0C0C0;
 #footer a { text-decoration: none; background: #FFF }
 
 
-.alternativePage #slogan h2 {font-size: 13px;}
+.alternativePage #wrap #pic #slogan h2 {font-size: 13px;}
 .alternativePage  #right_side {width: 210px;}
 	

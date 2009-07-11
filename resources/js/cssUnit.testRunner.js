@@ -257,6 +257,7 @@
                   aInts[1] = padHex(parseInt(aInts[2], 10).toString(16));
                   aInts[2] = padHex(parseInt(aInts[2], 10).toString(16));
                   oCurrentTestData.sActualValue = ("#"+aInts[0]+aInts[1]+aInts[2]).toUpperCase();
+                  oCurrentTestData.sRule = oCurrentTestData.sRule.toUpperCase();
               }
     };
     
