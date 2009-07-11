@@ -125,8 +125,8 @@
         var oHistory = cssUnit.testData.getHistory();
         $("#totalRuns").empty().text(oHistory.iTotalRuns);
         $("#lastRun").empty().text(oHistory.sLastRun);
-        $("#fails .bar").animate({backgroundPositionX : 0}, 3000, 'easeInOutQuad');
-        $("#passes .bar").animate({backgroundPositionX : -140}, 3000, 'easeInOutQuad');
+        //$("#fails .bar").animate({backgroundPositionX : 0}, 3000, 'easeInOutQuad');
+        //$("#passes .bar").animate({backgroundPositionX : -140}, 3000, 'easeInOutQuad');
     };
     
     /***********************************************

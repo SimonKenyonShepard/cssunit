@@ -22,7 +22,6 @@
     var dTestStart = null;
     var aPasses = [];
     var aFails = [];
-    var displayBoxDetails = {};
    
     /***********************************************
     // cssUnit.testRunner : class constructor (description)
@@ -31,6 +30,10 @@
        $(sTestRunnerButtonRef).click(runTests);
        eTestHarness = $("#testEnvironment").get(0).contentWindow;
         setDefaultWindow();
+    };
+    
+    cssUnit.getTestHarness = function() {
+        return eTestHarness;
     };
     
     var setDefaultWindow = function() {
@@ -141,10 +144,15 @@
               var bPassed = false;
               for(var i=0; i<oCurrentTest.aRules.length; i++) {
                   var oCurrentTestData = {sRule : oCurrentTest.aRules[i], sActualValue : sActualValue};
-                  //test to see if is color in wrong format
-                  testColors(oCurrentTestData);
-                  //test to see if it's a dimension in px and to what decimal places
-                  testPixels(oCurrentTestData);
+                  
+                  normalizeColors(oCurrentTestData);
+                  
+                  normalizePixels(oCurrentTestData);
+                  
+                  normalizeFontWeight(oCurrentTestData);
+                  
+                  checkForDivision(oCurrentTestData);
+                  //check to to see if it
                   if(oCurrentTestData.sActualValue === oCurrentTestData.sRule) {
                       bPassed = true;
                   }
@@ -186,7 +194,7 @@
 	var updateConsole = function(sContents, oTestData, iFails){
         var eNewEntry = $("<li>"+sContents+"</li>");
         if(oTestData) {
-            eNewEntry.bind("click", oTestData, displayTestResults);
+            eNewEntry.bind("click", oTestData, cssUnit.displayTestResults);
         }
         if(iFails > 0) {
             eNewEntry.addClass("fail");
@@ -239,78 +247,7 @@
         $("#console").animate({backgroundColor: sBGColor});
     };
     
-    var displayTestResults = function(event) {
-        eTestHarness.location.href=event.data.sPage;
-        $("#testEnvironment").bind("load", {aTested : event.data.aTested, sSelector : event.data.sSelector}, insertDetails);
-    };
-    
-    var insertDetails = function(event) {
-        //var sScriptPath = window.location.pathname.replace(/cssUnit\.html/, "")+"../resources/css/cssUnit_inject.css";
-        var sScriptPath = "http://www.trisis.co.uk/resources/css/cssUnit_inject.css";
-        $("head", eTestHarness.document).append('<link rel="stylesheet" href="'+sScriptPath+'" type="text/css"/>');
-        $("body", eTestHarness.document).append('<div class="cssUnitOverlay"></div>');
-        cssUnit.mainPanel.retractPane();
-        
-        for(var i=0; i<event.data.aTested.length; i++) {
-            var sTestData = generateDetails(event.data.aTested[i], event.data.sSelector, i);
-            var eTestData = $(sTestData, eTestHarness.document);
-            $("body", eTestHarness.document).append(eTestData);
-            eTestData.toggle(showFailDetails, hideFailDetails);
-        }
-        $("#testEnvironment").unbind("load", insertDetails);
-        
-    };
-    
-    var generateDetails = function(oData, sSelector, iTestNo) {
-        //must be output as a string becuase IE won't allow elements created in one document to be appended to another in an iframe
-        var sType="cssUnitPass";
-        var sDetails = null;
-        if(!oData.bPassed) {
-            $(sSelector, eTestHarness.document).eq(oData.iElementIndex).css({zIndex: 9999999, position: "relative"});
-            sType = "cssUnitFail";
-            var oOffsets = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).offset();
-            var iWidth = $(sSelector, eTestHarness.document).eq(oData.iElementIndex).width();
-            var sDetailsContent = '<div class="details"><span><strong>Element:</strong>'+sSelector+'</span><span><strong>Expected:</strong>'+oData.sExpected+'</span><span><strong>Actual:</strong>'+oData.sActual+'</span></div>';
-            sDetails = '<div class="cssUnitInfo '+sType+'" style="top:'+oOffsets.top+'px; left: '+(oOffsets.left+iWidth)+'px;"><span class="pointer"></span><div class="wrapper"><strong>'+iTestNo+'</strong>'+sDetailsContent+'</div></div>';
-        }
-
-        return sDetails;
-    };
-    
-    var showFailDetails = function() {
-        var eWrapper = $(".wrapper", this);
-        getSizeDetails(eWrapper);
-        eWrapper.animate({
-            width: 150,
-            height: 100,
-            left: -75,
-            top: -50
-        }, 300, 'easeOutBounce', function() {
-           $(this).find(".details").fadeIn("normal"); 
-        });
-    };
-    
-    var hideFailDetails = function() {
-        var that = this;
-        $(".details", this).fadeOut("fast", function() {
-            $(".wrapper", that).animate({
-                width: displayBoxDetails.width,
-                height: displayBoxDetails.height,
-                left: displayBoxDetails.left,
-                top: displayBoxDetails.top
-            }, 300, 'easeOutBounce');
-        });
-        
-    };
-    
-    var getSizeDetails = function(element) {
-        displayBoxDetails.height = element.height();
-        displayBoxDetails.width = element.width();
-        displayBoxDetails.left = element.position().left;
-        displayBoxDetails.top = element.position().top;
-    };
-    
-    var testColors = function(oCurrentTestData) {
+    var normalizeColors = function(oCurrentTestData) {
         //for different browsers return different styles of color response
         if(oCurrentTestData.sActualValue.indexOf("rgb") !== -1)
               {
@@ -323,7 +260,7 @@
               }
     };
     
-    var testPixels = function(oCurrentTestData) {
+    var normalizePixels = function(oCurrentTestData) {
         if(oCurrentTestData.sRule.indexOf("px") !== -1) {
             //find out how many decimal places it has
             var aDecimals = oCurrentTestData.sRule.split(".");
@@ -350,13 +287,23 @@
         return sNumber;
     };
     
-    var testBold = function(oCurrentTestData) {
+    var normalizeFontWeight = function(oCurrentTestData) {
         oCurrentTestData.sActualValue= replaceFontWeightKeywords(oCurrentTestData.sActualValue);
         oCurrentTestData.sRule = replaceFontWeightKeywords(oCurrentTestData.sRule);
     };
     
     var replaceFontWeightKeywords = function(sValue) {
-        sValue.replace(/bold/, "700");
+        return sValue.replace(/bold/, "700");
+    };
+    
+    var checkForDivision = function(oCurrentTestData) {
+        if(oCurrentTestData.sRule.indexOf("/") !== -1) {
+            var divisor = parseFloat(oCurrentTestData.sRule.replace(/\//, ""), 10);
+            var remainder = parseFloat(oCurrentTestData.sActualValue, 10)%divisor;
+            if(remainder === 0) {
+                oCurrentTestData.sRule = oCurrentTestData.sActualValue;
+            }
+        }
     };
     
     var arrayToString = function(array) {

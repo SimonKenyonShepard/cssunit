@@ -34,7 +34,8 @@
     var newFile = function(event)
     {
         event.preventDefault();
-        var sFileName = $(sInputRef).attr("value");
+        var eInput = $(sInputRef);
+        var sFileName = eInput.attr("value");
         var bNewFile = cssUnit.testData.addFile(sFileName);
         if(bNewFile) {
             var eNewFile = generateNewFileMarkUp(sFileName);
@@ -42,6 +43,7 @@
             $("#existingFiles").prepend(eNewFile);
             $(eNewFile).slideDown("normal");            
         }
+        eInput.blur();
     };
     
     /***********************************************
