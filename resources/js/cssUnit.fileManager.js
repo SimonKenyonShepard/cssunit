@@ -23,6 +23,7 @@
     cssUnit.fileManager = function(){
        //bind the form submit to the add selector
        $(sFormRef).bind("submit", newFile);
+       $(sInputRef).bind("focus", function() {$(this).select();});
     };
     
     /***********************************************

@@ -55,7 +55,7 @@ hr { height: 1px; border-style: none; color: #d0d0d0; background-color: #C0C0C0;
 		
 /* main area */
 #main { }
-	#right_side { float: right; width: 212px; background: #F6F6F6; padding: 5px 10px 5px 10px; margin-bottom: 10px }
+	#right_side { float: right; width: 200px; background: #F6F6F6; padding: 5px 10px 5px 10px; margin-bottom: 10px }
 		#right_side ul { padding: 3px 0 8px 0 } 
 		#right_side li { line-height: 18px; background: #F6F6F6 url(images/cat-li.gif) no-repeat left; list-style: none; padding-left: 20px; }
 		#right_side a { background: #F6F6F6; text-decoration:  none }
@@ -77,4 +77,8 @@ hr { height: 1px; border-style: none; color: #d0d0d0; background-color: #C0C0C0;
 #footer { clear: both; border-top: 1px solid #DCDCDC; margin: 0 0 3em 0; color: #777;  background: #fff }
 #footer .right  { float: right; text-align: right; background: #FFF; }
 #footer a { text-decoration: none; background: #FFF }
+
+
+.alternativePage #slogan h2 {font-size: 13px;}
+.alternativePage  #right_side {width: 210px;}
 	
