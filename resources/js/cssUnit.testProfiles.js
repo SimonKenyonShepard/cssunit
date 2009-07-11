@@ -24,6 +24,7 @@
        $("#newTestSet").bind("click", createNewTestSet);
        $("#testSet").bind("change", changeTestSet);
        $(".rename").bind("submit", updateDisplayName);
+       $("#testSetName").bind("focus", function() {$(this).select();});
        $("#testSet").trigger("change");
     };
     
