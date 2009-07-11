@@ -78,10 +78,9 @@ ol, ul  {
 #cssUnit .mainOptions li {
 	
 	background: #31c4f5 url(../images/cssUnit/bg_mainOptions.png) repeat-x bottom left;
-	border: 2px solid #fff;
 	font-family: monospace;
 	margin-bottom: 5px;
-	-moz-border-radius: 10px;
+	-moz-border-radius: 4px;
 	opacity: 0.5;
 	padding: 5px 10px 0 10px;
 	position: relative;
