@@ -254,11 +254,14 @@
                   oCurrentTestData.sActualValue = oCurrentTestData.sActualValue.replace(/([A-Za-z\(\) ])/g, "");
                   var aInts = oCurrentTestData.sActualValue.split(",");
                   aInts[0] = padHex(parseInt(aInts[0], 10).toString(16));
-                  aInts[1] = padHex(parseInt(aInts[2], 10).toString(16));
+                  aInts[1] = padHex(parseInt(aInts[1], 10).toString(16));
                   aInts[2] = padHex(parseInt(aInts[2], 10).toString(16));
                   oCurrentTestData.sActualValue = ("#"+aInts[0]+aInts[1]+aInts[2]).toUpperCase();
                   oCurrentTestData.sRule = oCurrentTestData.sRule.toUpperCase();
               }
+        if(oCurrentTestData.sRule.indexOf("#") !== -1 && oCurrentTestData.sRule.length === 4) {
+            oCurrentTestData.sRule = oCurrentTestData.sRule + oCurrentTestData.sRule.substr(1, oCurrentTestData.sRule.length);
+        }
     };
     
     var normalizePixels = function(oCurrentTestData) {
