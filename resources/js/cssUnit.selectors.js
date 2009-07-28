@@ -37,7 +37,7 @@
     {
         event.preventDefault();
         var sNewRule = $(sInputRef).attr("value").split("{");
-        var sSelector = $.trim(sNewRule[0].toLowerCase());
+        var sSelector = $.trim(sNewRule[0]);
         var aRuleData = $.trim(sNewRule[1].toLowerCase()).replace(/}/, "").replace(/;/g, "").split(":");
         var sRuleName = aRuleData[0];
         var sRuleValue = aRuleData[1].replace(/ /g, "");
