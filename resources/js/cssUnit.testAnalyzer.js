@@ -15,6 +15,7 @@
    
    var eTestHarness = null;
    var displayBoxDetails = {};
+   var largeBoxHeight = 0;
         
     cssUnit.displayTestResults = function(event) {
         eTestHarness = cssUnit.getTestHarness();
@@ -66,10 +67,11 @@
     
     var showFailDetails = function(event) {
         var eWrapper = $(".wrapper", this);
-        getSizeDetails(eWrapper);
+        getSmallBoxSizeDetails(eWrapper);
+        getLargeBoxHeight($(this));
         eWrapper.animate({
             width: 150,
-            height: 65,
+            height: largeBoxHeight,
             left: -75,
             top: -50
         }, 300, 'easeOutBounce', function() {
@@ -92,7 +94,20 @@
         
     };
     
-    var getSizeDetails = function(element) {
+    var getLargeBoxHeight = function(element) {
+        var testElement = element.clone();
+        testElement
+            .appendTo(eTestHarness.document.body)
+            .find(".wrapper")
+            .css({visibility: "hidden", height: "auto", width: 150})
+            .end()
+            .find(".details")
+            .css({display:"block"});
+        largeBoxHeight = testElement.find(".wrapper").height();
+        testElement.remove();
+    };
+    
+    var getSmallBoxSizeDetails = function(element) {
         displayBoxDetails.height = element.height();
         displayBoxDetails.width = element.width();
         displayBoxDetails.left = element.position().left;
